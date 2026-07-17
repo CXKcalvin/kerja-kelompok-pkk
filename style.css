@@ -87,15 +87,14 @@ header{
     font-size:24px;
     font-weight:800;
     letter-spacing:.5px;
+    display: flex;
+    align-items: center;
 
 }
 
-.logo i{
-
+.logo img{
     margin-right:8px;
-
-    color:#A855F7;
-
+    width: 50px;
 }
 
 .menu{
@@ -759,9 +758,14 @@ header{
    PRICING
 ========================================================= */
 
+.harga{
+    display: flex;
+    gap: 5%;
+}
+
 .pricing-card{
 
-    max-width:480px;
+    width: 100%;
 
     margin:auto;
 
@@ -1068,6 +1072,10 @@ footer{
 
         grid-template-columns:1fr;
 
+    }
+
+    .harga{
+        display: grid;
     }
 
     .portfolio-grid{
