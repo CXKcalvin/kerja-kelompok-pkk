@@ -1,0 +1,9 @@
+// 1. WAJIB: Import fungsi-fungsi dasar Bootstrap terlebih dahulu
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+$theme-colors: map-merge($theme-colors, (
+
+));
+
+@import "bootstrap/scss/bootstrap";
