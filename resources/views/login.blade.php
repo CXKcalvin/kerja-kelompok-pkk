@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.template')
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login & Register · Purple & Black</title>
-    <!-- Font Awesome for icons (optional but adds flair) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="/css/login.css">
-</head>
+@section('title','Login & Register · Purple & Black')
+@section('title','Studio Edit | Jasa Edit Foto Profesional')
+<link rel="stylesheet" href="/css/login.css">
+
+@section('isi')
 
 <body>
 
@@ -28,14 +24,15 @@
         <div class="forms-container">
 
             <!-- LOGIN FORM -->
-            <form class="form active" id="loginForm" autocomplete="off">
+            <form action="{{ route('authlogin') }}" method="post" class="form active" id="loginForm" autocomplete="off">
+                @csrf
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="Email address" required />
+                    <input type="email" name="email" placeholder="Email address" required />
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" id="loginPassword" required />
+                    <input type="password" name="password" placeholder="Password" id="loginPassword" required />
                     <button type="button" class="toggle-pw" id="toggleLoginPw" onclick="togglePassword('loginPassword')">
                         <i class="fas fa-eye"></i>
                     </button>
@@ -44,28 +41,30 @@
                 <button type="submit" class="btn-primary">
                     <i class="fas fa-arrow-right-to-bracket"></i> Login
                 </button>
+                @error('email')
+                <div style="background-color: gray; color: red; border-radius: 20px; padding: 20px;">
+                    {{ $message }}
+                </div>
+                @enderror
             </form>
 
             <!-- REGISTER FORM -->
-            <form class="form" id="registerForm" autocomplete="off">
+            <form action="{{ route('authregister') }}" method="post" class="form" id="registerForm" autocomplete="off">
+                @csrf
                 <div class="input-group">
                     <i class="fas fa-user"></i>
-                    <input name="nama_siswa" type="text" placeholder="Full name" required />
+                    <input name="nama_client" type="text" placeholder="Full name" required />
                 </div>
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
-                    <input name="email_siswa" type="email" placeholder="Email address" required />
+                    <input name="email_client" type="email" placeholder="Email address" required />
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input name="password_siswa" type="password" placeholder="Password" id="registerPassword" required />
+                    <input name="password_client" type="password" placeholder="Password" id="registerPassword" required />
                     <button type="button" class="toggle-pw" id="toggleRegisterPw" onclick="togglePassword('registerPassword')">
                         <i class="fas fa-eye"></i>
                     </button>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-check-circle"></i>
-                    <input type="password" placeholder="Confirm password" required />
                 </div>
 
                 <button type="submit" class="btn-primary">
@@ -77,5 +76,4 @@
 
     <script src="/js/login.js"></script>
 </body>
-
-</html>
+@endsection

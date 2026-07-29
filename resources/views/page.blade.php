@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+@extends('layout.template')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Studio Edit | Jasa Edit Foto Profesional</title>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+@section('title','Studio Edit | Jasa Edit Foto Profesional')
     <!-- CSS -->
     <link rel="stylesheet" href="/css/style.css">
 
-    <link rel="shortcut icon" href="/img/ChatGPT_Image_18_Jul_2026__02.12.14-removebg-preview.png" type="image/x-icon">
-</head>
-
+@section('isi')
 <body>
 
     <!-- ================= HEADER ================= -->
@@ -355,5 +344,4 @@
     <script src="/js/script.js"></script>
 
 </body>
-
-</html>
+@endsection
