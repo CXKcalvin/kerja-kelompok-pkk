@@ -19,30 +19,38 @@ class LoginController extends Controller
     public function authlogin(Request $request)
     {
         // 1. Validasi Input
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+        $request->validate([
+            'login' => 'required', // field ini bisa berisi username atau email
+            'password' => 'required',
         ]);
 
-        // 2. Coba Autentikasi
+        // 2. Tentukan field mana yang digunakan (username atau email)
+        $login = $request->input('login');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+
+        // 3. Coba Autentikasi
+        $credentials = [
+            $field => $login,
+            'password' => $request->password,
+        ];
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // 3. Pengecekan Role User
-            $user = Auth::user();
+            // 4. Pengecekan Role User
+            $admin = Auth::user();
 
-            if ($user->role === 'admin') {
+            if ($admin->role === 'admin') {
                 return redirect()->intended(route('admin'));
             }
 
-            // Jika bukan admin, arahkan ke halaman client
             return redirect()->intended(route('page'));
         }
 
-        // 4. Jika gagal login
+        // 5. Jika gagal login
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+            'login' => 'Username/Email atau password salah.',
+        ])->onlyInput('login');
     }
 
     public function authregister(Request $request)
@@ -50,7 +58,7 @@ class LoginController extends Controller
         $request->validate([
             'nama_client' => 'required',
             'email_client' => 'required|email|unique:users,email',
-            'password_client' => 'required|min:6'
+            'password_client' => 'required'
         ]);
 
         User::create([
@@ -60,8 +68,7 @@ class LoginController extends Controller
             'role' => 'client',
         ]);
 
-        return redirect()->route('login')
-            ->with('success', 'Register berhasil.');
+        return redirect()->route('login')->with('success', 'Register berhasil.');
     }
 
     // Logout
