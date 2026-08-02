@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -37,15 +38,18 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // 4. Pengecekan Role User
-            $admin = Auth::user();
+            // 4. Pengecekan Role User (Cukup ambil dari Auth::user())
+            $user = Auth::user();
 
-            if ($admin->role === 'admin') {
+            // Cek role dari user yang berhasil login tersebut
+            if ($user->role === 'admin') {
                 return redirect()->intended(route('admin'));
             }
-
-            return redirect()->intended(route('page'));
+            if ($user->role === 'client') {
+                return redirect()->intended(route('page'));
+            }
         }
+
 
         // 5. Jika gagal login
         return back()->withErrors([

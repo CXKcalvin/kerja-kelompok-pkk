@@ -28,7 +28,7 @@
                 @csrf
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="text" name="login" placeholder="Email address" required />
+                    <input type="text" name="login" placeholder="Email address/username" required />
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>

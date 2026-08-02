@@ -10,7 +10,7 @@
     <header>
         <div class="container">
             <div href="#" class="logo">
-                <img src="/img/ChatGPT_Image_18_Jul_2026__02.12.14-removebg-preview.png" alt="Logo"></img>
+                <img src="/img/logo.png" alt="Logo"></img>
                 Studio Edit
             </div>
 
