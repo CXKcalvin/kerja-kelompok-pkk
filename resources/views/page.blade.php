@@ -1,10 +1,11 @@
 @extends('layout.template')
 
 @section('title','Studio Edit | Jasa Edit Foto Profesional')
-    <!-- CSS -->
-    <link rel="stylesheet" href="/css/style.css">
+<!-- CSS -->
+<link rel="stylesheet" href="/css/style.css">
 
 @section('isi')
+
 <body>
     <!-- ================= HEADER ================= -->
     <header>
@@ -12,6 +13,9 @@
             <div href="#" class="logo">
                 <img src="/img/logo.png" alt="Logo"></img>
                 Studio Edit
+                <span>
+                    Status: {{ Auth::user()->status->nama_status }}
+                </span>
             </div>
 
             <nav class="menu">

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -88,10 +87,5 @@ class LoginController extends Controller
     public function page()
     {
         return view('page');
-    }
-
-    public function admin()
-    {
-        return view('admin');
     }
 }

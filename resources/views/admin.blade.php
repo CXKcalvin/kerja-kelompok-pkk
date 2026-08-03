@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="id">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,11 +9,12 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="/css/admin.css">
 </head>
+
 <body>
   <div class="container">
     <header>
       <!-- <div style="width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700">AD</div> -->
-       <img src="/img/logo.png" alt="Logo" style="width:64px;height:64px;border-radius:10px;object-fit:cover">
+      <img src="/img/logo.png" alt="Logo" style="width:64px;height:64px;border-radius:10px;object-fit:cover">
       <div class="brand">
         <h1>Dashboard Admin</h1>
         <p class="lead">Ringkasan cepat — ungu & hitam theme</p>
@@ -46,11 +48,33 @@
           <p class="muted">Daftar client dan status terkini.</p>
           <table>
             <thead>
-              <tr><th>Nama Client</th><th>Email</th><th>Status</th></tr>
+              <tr>
+                <th>Nama Client</th>
+                <th>Email</th>
+                <th>Status</th>
+              </tr>
             </thead>
             <tbody id="clientsTable">
-              <tr><td name="clientName"></td><td name="clientEmail"></td><td><span class="status-pill status-active" name="clientStatus"></span></td></tr>
-              <!-- <tr><td>CV. Cahaya</td><td>info@cahaya.id</td><td><span class="status-pill status-pending">Pending</span></td></tr>
+              @foreach ($users as $client)
+              <tr>
+                <td>{{ $client->name }}</td>
+                <td>{{ $client->email }}</td>
+                <td>
+                  <form action="{{ route('admin', $client->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <select name="status_id" onchange="this.form.submit()">
+                      <option value="1">Proses</option>
+                      <option value="2">Selesai</option>
+                      <option value="3">Dibatalkan</option>
+                    </select>
+                  </form>
+                </td>
+              </tr>
+              @endforeach
+              <!-- <tr><td name="clientName"></td><td name="clientEmail"></td><td><span class="status-pill status-active" name="clientStatus"></span></td></tr>
+              <tr><td>CV. Cahaya</td><td>info@cahaya.id</td><td><span class="status-pill status-pending">Pending</span></td></tr>
               <tr><td>Freelance A</td><td>freelance@example.com</td><td><span class="status-pill status-active">Active</span></td></tr> -->
             </tbody>
           </table>
@@ -70,8 +94,14 @@
 
           <div class="services-list" id="servicesList">
             <!-- contoh item -->
-            <div class="service-item"><div>Desain Website</div><div>Rp 2.500.000</div></div>
-            <div class="service-item"><div>Maintenance Bulanan</div><div>Rp 500.000</div></div>
+            <div class="service-item">
+              <div>Desain Website</div>
+              <div>Rp 2.500.000</div>
+            </div>
+            <div class="service-item">
+              <div>Maintenance Bulanan</div>
+              <div>Rp 500.000</div>
+            </div>
           </div>
           <p class="footer-note">Daftar bersifat sementara — hubungkan ke database dan endpoint CRUD untuk fungsionalitas penuh.</p>
         </div>
@@ -113,4 +143,5 @@
 
   <script src="/js/admin.js"></script>
 </body>
+
 </html>

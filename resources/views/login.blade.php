@@ -41,7 +41,7 @@
                 <button type="submit" class="btn-primary">
                     <i class="fas fa-arrow-right-to-bracket"></i> Login
                 </button>
-                @error('email')
+                @error('login')
                 <div style="background-color: gray; color: red; border-radius: 20px; padding: 20px;">
                     {{ $message }}
                 </div>
