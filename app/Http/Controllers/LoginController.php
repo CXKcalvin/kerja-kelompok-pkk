@@ -86,6 +86,14 @@ class LoginController extends Controller
 
     public function page()
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        if (Auth::user()->role !== 'client') {
+            return redirect()->route('admin');
+        }
+
         return view('page');
     }
 }

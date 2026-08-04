@@ -13,5 +13,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Route khusus setelah login (Sebaiknya dilindungi middleware auth)
 Route::middleware(['auth'])->group(function () {
     Route::get('/page', [LoginController::class, 'page'])->name('page');
+    Route::put('/admin/status/{id}', [ControllerAdmin::class, 'updateStatus'])
+    ->name('admin.status.update');
     Route::get('/admin', [ControllerAdmin::class, 'admin'])->name('admin');
 });

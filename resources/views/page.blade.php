@@ -12,9 +12,11 @@
         <div class="container">
             <div href="#" class="logo">
                 <img src="/img/logo.png" alt="Logo"></img>
-                Studio Edit
-                <span>
-                    Status: {{ Auth::user()->status->nama_status }}
+                <span style="direction: column; display: flex; align-items: center; gap: 4px;">
+                    Studio Edit
+                    <span style="font-size: 0.8rem; color: #7b2cbf; margin-left: 4px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); padding: 2px 6px; border-radius: 4px;">
+                        Status: {{ Auth::user()->status->nama_status }}
+                    </span>
                 </span>
             </div>
 

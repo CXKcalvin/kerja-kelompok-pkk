@@ -80,6 +80,10 @@ textarea {
     color: #fff;
     width: 100%;
 }
+select,
+select option {
+    color: #000;
+}
 button {
     background: var(--accent);
     border: none;

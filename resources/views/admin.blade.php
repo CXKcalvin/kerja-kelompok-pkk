@@ -59,15 +59,21 @@
               <tr>
                 <td>{{ $client->name }}</td>
                 <td>{{ $client->email }}</td>
+
                 <td>
-                  <form action="{{ route('admin', $client->id) }}" method="POST">
+                  <form action="{{ route('admin.status.update', $client->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
                     <select name="status_id" onchange="this.form.submit()">
-                      <option value="1">Proses</option>
-                      <option value="2">Selesai</option>
-                      <option value="3">Dibatalkan</option>
+
+                      @foreach ($statuses as $status)
+                      <option value="{{ $status->id }}"
+                        {{ $client->status_id == $status->id ? 'selected' : '' }}>
+                        {{ $status->nama_status }}
+                      </option>
+                      @endforeach
+
                     </select>
                   </form>
                 </td>
