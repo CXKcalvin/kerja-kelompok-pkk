@@ -88,6 +88,15 @@ header {
   width: 50px;
 }
 
+.judul{
+  display: grid;
+}
+
+.status{
+  color: #c084fc;
+  font-size: 1vw;
+}
+
 .menu {
   display: flex;
   gap: 35px;

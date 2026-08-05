@@ -12,9 +12,12 @@
         <div class="container">
             <div href="#" class="logo">
                 <img src="/img/logo.png" alt="Logo"></img>
-                Studio Edit
-                <span>
-                    Status: {{ Auth::user()->status->nama_status }}
+                <span class="judul">
+                    Studio Edit
+                    <span class="status">
+                        Status:
+                        {{ Auth::user()->status->nama_status }}
+                    </span>
                 </span>
             </div>
 

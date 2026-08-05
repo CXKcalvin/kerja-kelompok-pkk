@@ -80,6 +80,12 @@ textarea {
     color: #fff;
     width: 100%;
 }
+
+.status-cell::selection {
+  color: #000000;
+  background-color: #ffffff;
+}
+
 button {
     background: var(--accent);
     border: none;

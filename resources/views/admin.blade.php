@@ -1,15 +1,12 @@
-<!doctype html>
-<html lang="id">
+@extends('layout.template')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Dashboard Admin</title>
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="/css/admin.css">
-</head>
+@section('title','Studio Edit | Admin Dashboard')
+<!-- Link css -->
+<link rel="stylesheet" href="/css/admin.css">
+<!-- Link Javascript -->
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+@section('isi')
 <body>
   <div class="container">
     <header>
@@ -59,15 +56,21 @@
               <tr>
                 <td>{{ $client->name }}</td>
                 <td>{{ $client->email }}</td>
-                <td>
-                  <form action="{{ route('admin', $client->id) }}" method="POST">
+
+                <td class="status-cell">
+                  <form action="{{ route('admin.status.update', $client->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
                     <select name="status_id" onchange="this.form.submit()">
-                      <option value="1">Proses</option>
-                      <option value="2">Selesai</option>
-                      <option value="3">Dibatalkan</option>
+
+                      @foreach ($statuses as $status)
+                      <option value="{{ $status->id }}"
+                        {{ $client->status_id == $status->id ? 'selected' : '' }}>
+                        {{ $status->nama_status }}
+                      </option>
+                      @endforeach
+
                     </select>
                   </form>
                 </td>
@@ -142,6 +145,7 @@
   </div>
 
   <script src="/js/admin.js"></script>
+  
 </body>
 
-</html>
+@endsection
