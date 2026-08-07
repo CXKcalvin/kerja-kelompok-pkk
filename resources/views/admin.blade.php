@@ -4,9 +4,10 @@
 <!-- Link css -->
 <link rel="stylesheet" href="/css/admin.css">
 <!-- Link Javascript -->
- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @section('isi')
+
 <body>
   <div class="container">
     <header>
@@ -22,22 +23,32 @@
       <!-- Main column -->
       <div>
         <div class="card">
-          <h2>Merubah Foto di Menu Awal</h2>
-          <p class="muted">Unggah foto yang akan tampil di halaman utama. Preview sebelum menyimpan.</p>
-          <form id="photoForm" action="#" method="POST" enctype="multipart/form-data">
-            <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
-              <div style="width:120px;height:80px;border-radius:8px;background:#0a0a0b;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid rgba(255,255,255,0.03)" id="photoPreview">
-                <img src="https://via.placeholder.com/300x200/7b2cbf/ffffff?text=Preview" alt="preview" style="width:100%;height:100%;object-fit:cover">
-              </div>
-              <div style="flex:1">
-                <label class="small">Pilih file</label>
-                <input type="file" id="photoInput" name="photo" accept="image/*">
-                <div style="margin-top:8px" class="actions">
-                  <button type="button" id="savePhoto">Simpan</button>
+          <div class="child">
+            <h2>Merubah Foto Pada Halaman Utama</h2>
+            <p class="muted">Unggah foto yang akan tampil di halaman utama. Preview sebelum menyimpan.</p>
+            <select id="photoSelect" style="margin-top:8px">
+              <option disabled selected hidden>Silahkan Pilih Section Mana Mau Diganti Fotonya</option>
+              <option value="hero">Hero Section</option>
+              <option value="layanan">Layanan Section</option>
+              <option value="developer">Developer Section</option>
+              <option value="harga">Harga Section</option>
+              <option value="hasil">Hasil Jasa Section</option>
+            </select>
+            <form id="photoForm" action="#" method="POST" enctype="multipart/form-data">
+              <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+                <div style="width:120px;height:80px;border-radius:8px;background:#0a0a0b;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid rgba(255,255,255,0.03)" id="photoPreview">
+                  <img src="/img/putih polos.jpeg" id="pratinjauFoto" alt="preview" style="width:100%;height:100%;object-fit:cover">
+                </div>
+                <div style="flex:1">
+                  <label class="small">Pilih file</label>
+                  <input type="file" id="photoInput" name="photo" accept="image/*">
+                  <div style="margin-top:8px" class="actions">
+                    <button type="button" id="savePhoto">Simpan</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
 
         <div class="card" style="margin-top:18px">
@@ -90,7 +101,7 @@
           <form id="serviceForm" action="#" method="POST">
             <div style="display:flex;gap:8px;margin-top:8px">
               <input type="text" id="serviceName" placeholder="Nama layanan" required>
-              <input type="number" id="servicePrice" placeholder="Harga (Rp)" required>
+              <input type="number" id="servicePrice" placeholder="Harga (Rp)" inputmode="numeric" pattern="[0-9]*" required>
               <button type="button" id="addService">Tambah</button>
             </div>
           </form>
@@ -145,7 +156,7 @@
   </div>
 
   <script src="/js/admin.js"></script>
-  
+
 </body>
 
 @endsection

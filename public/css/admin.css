@@ -14,6 +14,14 @@
         Arial,
         sans-serif;
 }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 body {
     margin: 0;
     background: linear-gradient(180deg, var(--bg), #07070a);
@@ -73,17 +81,17 @@ input[type="file"] {
 input,
 select,
 textarea {
-    background: var(--glass);
+    background: purple;
     border: 1px solid rgba(255, 255, 255, 0.04);
     padding: 10px;
     border-radius: 6px;
-    color: #fff;
+    color: white;
     width: 100%;
 }
 
 .status-cell::selection {
-  color: #000000;
-  background-color: #ffffff;
+    color: #000000;
+    background-color: #ffffff;
 }
 
 button {
