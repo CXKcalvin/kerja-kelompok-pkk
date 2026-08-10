@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Bertingkat</title>
+</head>
+<body>
+
+    <label for="kategori">Pilih Kategori:</label>
+    <select id="kategori">
+        <option value="">-- Pilih Kategori --</option>
+        <option value="buah">Buah</option>
+        <option value="sayur">Sayur</option>
+    </select>
+
+    <br><br>
+
+    <label for="subkategori">Pilih Pilihan:</label>
+    <select id="subkategori">
+        <option value="">-- Pilih Dulu Kategori --</option>
+    </select>
+
+    <script>
+        // Data pilihan untuk masing-masing kategori
+        const dataPilihan = {
+            buah: ["Apel", "Pisang", "Jeruk"],
+            sayur: ["Bayam", "Kangkung", "Wortel"]
+        };
+
+        const selectKategori = document.getElementById("kategori");
+        const selectSub = document.getElementById("subkategori");
+
+        // Jalankan fungsi saat kategori berubah
+        selectKategori.addEventListener("change", function() {
+            const kategoriDipilih = this.value;
+            
+            // Kosongkan isi select kedua
+            selectSub.innerHTML = '<option value="">-- Pilih Pilihan --</option>';
+
+            // Jika kategori punya data, masukkan ke select kedua
+            if (kategoriDipilih && dataPilihan[kategoriDipilih]) {
+                dataPilihan[kategoriDipilih].forEach(function(item) {
+                    const opt = document.createElement("option");
+                    opt.value = item.toLowerCase();
+                    opt.textContent = item;
+                    selectSub.appendChild(opt);
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

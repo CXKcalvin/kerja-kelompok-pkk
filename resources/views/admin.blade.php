@@ -21,138 +21,255 @@
 
     <div class="grid">
       <!-- Main column -->
-      <div>
-        <div class="card">
-          <div class="child">
-            <h2>Merubah Foto Pada Halaman Utama</h2>
-            <p class="muted">Unggah foto yang akan tampil di halaman utama. Preview sebelum menyimpan.</p>
-            <select id="photoSelect" style="margin-top:8px">
-              <option disabled selected hidden>Silahkan Pilih Section Mana Mau Diganti Fotonya</option>
-              <option value="hero">Hero Section</option>
-              <option value="layanan">Layanan Section</option>
-              <option value="developer">Developer Section</option>
-              <option value="harga">Harga Section</option>
-              <option value="hasil">Hasil Jasa Section</option>
-            </select>
-            <form id="photoForm" action="#" method="POST" enctype="multipart/form-data">
-              <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
-                <div style="width:120px;height:80px;border-radius:8px;background:#0a0a0b;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid rgba(255,255,255,0.03)" id="photoPreview">
-                  <img src="/img/putih polos.jpeg" id="pratinjauFoto" alt="preview" style="width:100%;height:100%;object-fit:cover">
-                </div>
-                <div style="flex:1">
-                  <label class="small">Pilih file</label>
-                  <input type="file" id="photoInput" name="photo" accept="image/*">
-                  <div style="margin-top:8px" class="actions">
-                    <button type="button" id="savePhoto">Simpan</button>
-                  </div>
-                </div>
-              </div>
-            </form>
+
+      <div class="card" style="margin-top:18px">
+        <h2>Melihat Status Client</h2>
+        <p class="muted">Daftar client dan status terkini.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Nama Client</th>
+              <th>Email</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="clientsTable">
+            @foreach ($users as $client)
+            <tr>
+              <td>{{ $client->name }}</td>
+              <td>{{ $client->email }}</td>
+
+              <td class="status-cell">
+                <form action="{{ route('admin.status.update', $client->id) }}" method="POST">
+                  @csrf
+                  @method('PUT')
+
+                  <select name="status_id" onchange="this.form.submit()">
+
+                    @foreach ($statuses as $status)
+                    <option value="{{ $status->id }}"
+                      {{ $client->status_id == $status->id ? 'selected' : '' }}>
+                      {{ $status->nama_status }}
+                    </option>
+                    @endforeach
+
+                  </select>
+                </form>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+        <p class="footer-note">Status client diambil dari sistem. Tambahkan integrasi backend untuk menampilkan data nyata.</p>
+      </div>
+
+      <div class="card">
+        <h2>Pemasukkan & Trafik</h2>
+        <p class="muted">Ringkasan pemasukkan + trafik untuk analisis keuangan.</p>
+        <div class="stats">
+          <div class="stat">
+            <h3 id="totalIncome">0</h3>
+            <div class="small">Total pemasukkan bulan ini</div>
+          </div>
+          <div class="stat">
+            <h3 id="entriesCount">0</h3>
+            <div class="small">Jumlah pemasukkan (transaksi)</div>
           </div>
         </div>
 
-        <div class="card" style="margin-top:18px">
-          <h2>Melihat Status Client</h2>
-          <p class="muted">Daftar client dan status terkini.</p>
+        <div style="margin-top:12px">
+          <canvas id="trafficChart" width="400" height="220"></canvas>
+        </div>
+
+        <div style="margin-top:12px" class="footer-note">Trafik menunjukkan kunjungan dan konversi — gunakan data riil dari analytics/backend untuk insight akurat.</div>
+      </div>
+    </div>
+
+    <!-- Sidebar column -->
+    <aside>
+      <div class="card" style="margin-top:18px">
+        <h2>Kelola Layanan</h2>
+        <p class="muted">Tambah layanan yang akan tampil di halaman publik.</p>
+
+        @if(session('success'))
+        <div class="alert">{{ session('success') }}</div>
+        @endif
+
+        <form id="serviceForm" action="{{ route('admin.services.store') }}" method="POST" enctype="multipart/form-data" data-validate="true">
+          @csrf
+          <div class="form-row" style="flex-direction:column;gap:12px;">
+            <label>
+              Foto Layanan
+              <input type="file" name="image" accept="image/*" required>
+            </label>
+
+            <label>
+              Judul Layanan
+              <input type="text" name="title" maxlength="255" placeholder="Judul layanan" required>
+            </label>
+
+            <label>
+              Deskripsi Layanan
+              <textarea name="description" rows="4" placeholder="Deskripsi layanan" required></textarea>
+            </label>
+
+            <div class="error-message"></div>
+            <button type="submit">Simpan Layanan</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <h2>Daftar Layanan</h2>
+        <p class="muted">Preview data layanan yang sudah tersimpan.</p>
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
-                <th>Nama Client</th>
-                <th>Email</th>
-                <th>Status</th>
+                <th>Foto</th>
+                <th>Judul</th>
+                <th>Deskripsi</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
               </tr>
             </thead>
-            <tbody id="clientsTable">
-              @foreach ($users as $client)
+            <tbody>
+              @forelse ($services as $service)
               <tr>
-                <td>{{ $client->name }}</td>
-                <td>{{ $client->email }}</td>
-
-                <td class="status-cell">
-                  <form action="{{ route('admin.status.update', $client->id) }}" method="POST">
+                <td><img src="/{{ $service->image_path }}" alt="{{ $service->title }}" class="thumb"></td>
+                <td>{{ $service->title }}</td>
+                <td>{{ \Illuminate\Support\Str::limit($service->description, 80) }}</td>
+                <td>{{ $service->created_at->format('d M Y') }}</td>
+                <td class="actions">
+                  <!-- <button class="action-button update" type="button" onclick="document.getElementById('service-edit-{{ $service->id }}').classList.toggle('hidden')">Edit</button> -->
+                  <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST" style="display:inline;">
                     @csrf
-                    @method('PUT')
-
-                    <select name="status_id" onchange="this.form.submit()">
-
-                      @foreach ($statuses as $status)
-                      <option value="{{ $status->id }}"
-                        {{ $client->status_id == $status->id ? 'selected' : '' }}>
-                        {{ $status->nama_status }}
-                      </option>
-                      @endforeach
-
-                    </select>
+                    @method('DELETE')
+                    <button class="action-button delete" type="submit">Hapus</button>
                   </form>
                 </td>
               </tr>
-              @endforeach
-              <!-- <tr><td name="clientName"></td><td name="clientEmail"></td><td><span class="status-pill status-active" name="clientStatus"></span></td></tr>
-              <tr><td>CV. Cahaya</td><td>info@cahaya.id</td><td><span class="status-pill status-pending">Pending</span></td></tr>
-              <tr><td>Freelance A</td><td>freelance@example.com</td><td><span class="status-pill status-active">Active</span></td></tr> -->
+              <tr id="service-edit-{{ $service->id }}" class="edit-row hidden">
+                <td colspan="5">
+                  <form action="{{ route('admin.services.update', $service->id) }}" method="POST" enctype="multipart/form-data" data-validate="true">
+                    @csrf
+                    @method('PUT')
+                    <div class="edit-grid">
+                      <label>Ganti Foto
+                        <input type="file" name="image" accept="image/*">
+                      </label>
+                      <label>Judul
+                        <input type="text" name="title" value="{{ $service->title }}" required>
+                      </label>
+                      <label>Deskripsi
+                        <textarea name="description" rows="3" required>{{ $service->description }}</textarea>
+                      </label>
+                      <div class="error-message"></div>
+                      <button class="action-button update" type="submit">Perbarui</button>
+                    </div>
+                  </form>
+                </td>
+              </tr>
+              @empty
+              <tr>
+                <td colspan="5">Belum ada layanan. Tambahkan layanan baru di atas.</td>
+              </tr>
+              @endforelse
             </tbody>
           </table>
-          <p class="footer-note">Status client diambil dari sistem. Tambahkan integrasi backend untuk menampilkan data nyata.</p>
-        </div>
-
-        <div class="card" style="margin-top:18px">
-          <h2>Merubah atau Menambahkan Hasil Jasa</h2>
-          <p class="muted">Tambahkan layanan / hasil kerja yang bisa ditagihkan ke client.</p>
-          <form id="serviceForm" action="#" method="POST">
-            <div style="display:flex;gap:8px;margin-top:8px">
-              <input type="text" id="serviceName" placeholder="Nama layanan" required>
-              <input type="number" id="servicePrice" placeholder="Harga (Rp)" inputmode="numeric" pattern="[0-9]*" required>
-              <button type="button" id="addService">Tambah</button>
-            </div>
-          </form>
-
-          <div class="services-list" id="servicesList">
-            <!-- contoh item -->
-            <div class="service-item">
-              <div>Desain Website</div>
-              <div>Rp 2.500.000</div>
-            </div>
-            <div class="service-item">
-              <div>Maintenance Bulanan</div>
-              <div>Rp 500.000</div>
-            </div>
-          </div>
-          <p class="footer-note">Daftar bersifat sementara — hubungkan ke database dan endpoint CRUD untuk fungsionalitas penuh.</p>
         </div>
       </div>
 
-      <!-- Sidebar column -->
-      <aside>
-        <div class="card">
-          <h2>Pemasukkan & Trafik</h2>
-          <p class="muted">Ringkasan pemasukkan + trafik untuk analisis keuangan.</p>
-          <div class="stats">
-            <div class="stat">
-              <h3 id="totalIncome">0</h3>
-              <div class="small">Total pemasukkan bulan ini</div>
-            </div>
-            <div class="stat">
-              <h3 id="entriesCount">0</h3>
-              <div class="small">Jumlah pemasukkan (transaksi)</div>
-            </div>
-          </div>
+      <div class="card" style="margin-top:18px">
+        <h2>Kelola Hasil Jasa</h2>
+        <p class="muted">Tambah hasil pekerjaan yang akan muncul di portofolio publik.</p>
 
-          <div style="margin-top:12px">
-            <canvas id="trafficChart" width="400" height="220"></canvas>
-          </div>
+        <form id="portfolioForm" action="{{ route('admin.portfolios.store') }}" method="POST" enctype="multipart/form-data" data-validate="true">
+          @csrf
+          <div class="form-row" style="flex-direction:column;gap:12px;">
+            <label>
+              Foto Hasil Jasa
+              <input type="file" name="image" accept="image/*" required>
+            </label>
 
-          <div style="margin-top:12px" class="footer-note">Trafik menunjukkan kunjungan dan konversi — gunakan data riil dari analytics/backend untuk insight akurat.</div>
+            <label>
+              Judul Hasil Jasa
+              <input type="text" name="title" maxlength="255" placeholder="Judul hasil jasa" required>
+            </label>
+
+            <label>
+              Deskripsi Hasil Jasa
+              <textarea name="description" rows="4" placeholder="Deskripsi hasil jasa" required></textarea>
+            </label>
+
+            <div class="error-message"></div>
+            <button type="submit">Simpan Hasil Jasa</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <h2>Daftar Hasil Jasa</h2>
+        <p class="muted">Preview hasil jasa yang sudah tersimpan.</p>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Foto</th>
+                <th>Judul</th>
+                <th>Deskripsi</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              @forelse ($portfolios as $portfolio)
+              <tr>
+                <td><img src="/{{ $portfolio->image_path }}" alt="{{ $portfolio->title }}" class="thumb"></td>
+                <td>{{ $portfolio->title }}</td>
+                <td>{{ \Illuminate\Support\Str::limit($portfolio->description, 80) }}</td>
+                <td>{{ $portfolio->created_at->format('d M Y') }}</td>
+                <td class="actions">
+                  <button class="action-button update" type="button" onclick="document.getElementById('portfolio-edit-{{ $portfolio->id }}').classList.toggle('hidden')">Edit</button>
+                  <form action="{{ route('admin.portfolios.destroy', $portfolio->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button class="action-button delete" type="submit">Hapus</button>
+                  </form>
+                </td>
+              </tr>
+              <tr id="portfolio-edit-{{ $portfolio->id }}" class="edit-row hidden">
+                <td colspan="5">
+                  <form action="{{ route('admin.portfolios.update', $portfolio->id) }}" method="POST" enctype="multipart/form-data" data-validate="true">
+                    @csrf
+                    @method('PUT')
+                    <div class="edit-grid">
+                      <label>Ganti Foto
+                        <input type="file" name="image" accept="image/*">
+                      </label>
+                      <label>Judul
+                        <input type="text" name="title" value="{{ $portfolio->title }}" required>
+                      </label>
+                      <label>Deskripsi
+                        <textarea name="description" rows="3" required>{{ $portfolio->description }}</textarea>
+                      </label>
+                      <div class="error-message"></div>
+                      <button class="action-button update" type="submit">Perbarui</button>
+                    </div>
+                  </form>
+                </td>
+              </tr>
+              @empty
+              <tr>
+                <td colspan="5">Belum ada hasil jasa. Tambahkan project baru di atas.</td>
+              </tr>
+              @endforelse
+            </tbody>
+          </table>
         </div>
-
-        <div class="card" style="margin-top:18px">
-          <h2>Quick Actions</h2>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-            <button type="button">Sinkron Data Client</button>
-            <button type="button" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent)">Export Laporan</button>
-          </div>
-        </div>
-      </aside>
-    </div>
+      </div>
+    </aside>
+  </div>
   </div>
 
   <script src="/js/admin.js"></script>

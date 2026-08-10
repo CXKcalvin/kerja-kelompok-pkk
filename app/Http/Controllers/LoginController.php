@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Portfolio;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -86,6 +88,9 @@ class LoginController extends Controller
 
     public function page()
     {
-        return view('page');
+        $services = Service::latest()->get();
+        $portfolios = Portfolio::latest()->get();
+
+        return view('page', compact('services', 'portfolios'));
     }
 }

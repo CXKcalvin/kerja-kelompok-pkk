@@ -456,7 +456,7 @@ header {
   overflow: hidden;
 
   transition: 0.35s;
-
+  
   backdrop-filter: blur(10px);
 }
 
@@ -926,3 +926,4 @@ footer {
 
   box-shadow: 0 25px 70px rgba(168, 85, 247, 0.28);
 }
+

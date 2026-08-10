@@ -1,108 +1,171 @@
-// Photo preview
-const photoInput = document.getElementById("photoInput");
-const photoPreview = document.getElementById("photoPreview");
-photoInput &&
-    photoInput.addEventListener("change", (e) => {
-        const f = e.target.files && e.target.files[0];
-        if (!f) return;
-        const url = URL.createObjectURL(f);
-        photoPreview.innerHTML = "";
-        const img = document.createElement("img");
-        img.src = url;
-        img.style.width = "100%";
-        img.style.height = "100%";
-        img.style.objectFit = "cover";
-        photoPreview.appendChild(img);
+const allowedExtensions = ["jpg", "jpeg", "png", "webp"];
+
+function getWordCount(value) {
+    return value.trim().split(/\s+/).filter(Boolean).length;
+}
+
+function validateImage(file) {
+    if (!file) return true;
+    const extension = file.name.split(".").pop().toLowerCase();
+    return allowedExtensions.includes(extension);
+}
+
+function validateModuleForm(form) {
+    const title = form.querySelector('[name="title"]');
+    const description = form.querySelector('[name="description"]');
+    const image = form.querySelector('[name="image"]');
+    const errorBox = form.querySelector(".error-message");
+
+    if (!title || !description || !errorBox) return true;
+
+    const titleWords = getWordCount(title.value);
+    if (titleWords > 20) {
+        errorBox.textContent = `Judul hanya boleh maksimal 20 kata. Saat ini ${titleWords} kata.`;
+        return false;
+    }
+
+    const descriptionWords = getWordCount(description.value);
+    if (descriptionWords > 150) {
+        errorBox.textContent = `Deskripsi hanya boleh maksimal 150 kata. Saat ini ${descriptionWords} kata.`;
+        return false;
+    }
+
+    if (
+        image &&
+        image.files &&
+        image.files.length > 0 &&
+        !validateImage(image.files[0])
+    ) {
+        errorBox.textContent =
+            "Foto harus berformat JPG, JPEG, PNG, atau WEBP.";
+        return false;
+    }
+
+    errorBox.textContent = "";
+    return true;
+}
+
+function bindFormValidation(form) {
+    if (!form) return;
+
+    form.addEventListener("submit", function (event) {
+        if (!validateModuleForm(this)) {
+            event.preventDefault();
+        }
     });
 
-const inputFoto = document.getElementById("photoInput");
-const pratinjauFoto = document.getElementById("pratinjauFoto");
-
-// Deteksi saat pengguna selesai memilih file
-inputFoto.addEventListener("change", function () {
-    const file = this.files[0]; // Ambil file yang dipilih
-
-    if (file) {
-        const reader = new FileReader();
-
-        // Saat file selesai dibaca oleh sistem
-        reader.onload = function (e) {
-            // Ganti atribut src gambar lokal menjadi data foto terbaru
-            pratinjauFoto.src = e.target.result;
-        };
-
-        // Baca file sebagai URL data
-        reader.readAsDataURL(file);
+    const imageInput = form.querySelector('[name="image"]');
+    if (imageInput) {
+        imageInput.addEventListener("change", function () {
+            if (this.files.length && !validateImage(this.files[0])) {
+                const errorBox = form.querySelector(".error-message");
+                if (errorBox) {
+                    errorBox.textContent =
+                        "Foto harus berformat JPG, JPEG, PNG, atau WEBP.";
+                }
+                this.value = "";
+            }
+        });
     }
-});
+}
 
-// Services add (frontend only)
-const servicesList = document.getElementById("servicesList");
-document.getElementById("addService").addEventListener("click", () => {
-    const name = document.getElementById("serviceName").value.trim();
-    const price = document.getElementById("servicePrice").value.trim();
-    if (!name || !price) return alert("Isi nama layanan dan harga.");
-    const item = document.createElement("div");
-    item.className = "service-item";
-    item.innerHTML = `<div>${name}</div><div>Rp ${Number(price).toLocaleString("id-ID")}</div>`;
-    servicesList.prepend(item);
-    document.getElementById("serviceName").value = "";
-    document.getElementById("servicePrice").value = "";
-});
+const serviceForm = document.getElementById("serviceForm");
+const portfolioForm = document.getElementById("portfolioForm");
+const updateForms = document.querySelectorAll('form[data-validate="true"]');
 
-// Chart: trafik + pemasukkan contoh
-const ctx = document.getElementById("trafficChart").getContext("2d");
-const sampleLabels = ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"];
-const visits = [1500, 1200, 1100, 1900];
-const income = [3500000, 2000000, 1500000, 4000000]; // contoh pemasukkan per minggu
-// sum income & entries
-const total = income.reduce((a, b) => a + b, 0);
-const entries = visits.length; // contoh: jumlah entri
-document.getElementById("totalIncome").textContent =
-    "Rp " + total.toLocaleString("id-ID");
-document.getElementById("entriesCount").textContent = entries * 10; // contoh konversi -> tampilkan angka yang lebih bermakna
+bindFormValidation(serviceForm);
+bindFormValidation(portfolioForm);
+updateForms.forEach(bindFormValidation);
 
-const trafficChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-        labels: sampleLabels,
-        datasets: [
-            {
-                type: "line",
-                label: "Kunjungan",
-                data: visits,
-                borderColor: "#7b2cbf",
-                backgroundColor: "rgba(123,44,191,0.12)",
-                tension: 0.5,
-                yAxisID: "y",
-            },
-            {
-                type: "bar",
-                label: "Pemasukkan (Rp)",
-                data: income.map((v) => v / 1000),
-                backgroundColor: "#5a189a",
-                yAxisID: "y1",
-            },
-        ],
-    },
-    options: {
-        responsive: true,
-        interaction: { mode: "index", intersect: false },
-        scales: {
-            y: {
-                type: "linear",
-                position: "left",
-                ticks: { color: "#cfc" },
-                beginAtZero: true,
-            },
-            y1: {
-                type: "linear",
-                position: "right",
-                ticks: { color: "#ffd" },
-                beginAtZero: true,
-                grid: { display: false },
-            },
+const serviceImageInput = document.getElementById("serviceImage");
+const serviceImagePreview = document.getElementById("serviceImagePreview");
+
+if (serviceImageInput && serviceImagePreview) {
+    serviceImageInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file || !validateImage(file)) return;
+
+        const url = URL.createObjectURL(file);
+        serviceImagePreview.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = "Preview Layanan";
+        serviceImagePreview.appendChild(img);
+    });
+}
+
+const portfolioImageInput = document.getElementById("portfolioImage");
+const portfolioImagePreview = document.getElementById("portfolioImagePreview");
+
+if (portfolioImageInput && portfolioImagePreview) {
+    portfolioImageInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file || !validateImage(file)) return;
+
+        const url = URL.createObjectURL(file);
+        portfolioImagePreview.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = "Preview Hasil Jasa";
+        portfolioImagePreview.appendChild(img);
+    });
+}
+
+const ctx = document.getElementById("trafficChart");
+if (ctx) {
+    const chartContext = ctx.getContext("2d");
+    const sampleLabels = ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"];
+    const visits = [1500, 1200, 1100, 1900];
+    const income = [3500000, 2000000, 1500000, 4000000];
+    const total = income.reduce((acc, value) => acc + value, 0);
+    const entries = visits.length;
+
+    document.getElementById("totalIncome").textContent =
+        "Rp " + total.toLocaleString("id-ID");
+    document.getElementById("entriesCount").textContent = entries * 10;
+
+    new Chart(chartContext, {
+        type: "bar",
+        data: {
+            labels: sampleLabels,
+            datasets: [
+                {
+                    type: "line",
+                    label: "Kunjungan",
+                    data: visits,
+                    borderColor: "#7b2cbf",
+                    backgroundColor: "rgba(123,44,191,0.12)",
+                    tension: 0.5,
+                    yAxisID: "y",
+                },
+                {
+                    type: "bar",
+                    label: "Pemasukkan (Rp)",
+                    data: income.map((v) => v / 1000),
+                    backgroundColor: "#5a189a",
+                    yAxisID: "y1",
+                },
+            ],
         },
-        plugins: { legend: { labels: { color: "#ddd" } } },
-    },
-});
+        options: {
+            responsive: true,
+            interaction: { mode: "index", intersect: false },
+            scales: {
+                y: {
+                    type: "linear",
+                    position: "left",
+                    ticks: { color: "#cfc" },
+                    beginAtZero: true,
+                },
+                y1: {
+                    type: "linear",
+                    position: "right",
+                    ticks: { color: "#ffd" },
+                    beginAtZero: true,
+                    grid: { display: false },
+                },
+            },
+            plugins: { legend: { labels: { color: "#ddd" } } },
+        },
+    });
+}

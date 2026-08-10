@@ -103,32 +103,18 @@
         </div>
 
         <div class="card-grid">
+            @forelse ($services as $service)
             <div class="card">
-                <img src="/img/Perfect skin retouching.jpeg" alt="Retouch">
-                <h3>Retouch Wajah</h3>
-                <p>
-                    Menghaluskan kulit, menghilangkan noda,
-                    jerawat, dan membuat wajah tetap natural.
-                </p>
+                <img src="/{{ $service->image_path }}" alt="{{ $service->title }}">
+                <h3>{{ $service->title }}</h3>
+                <p>{{ $service->description }}</p>
             </div>
-
+            @empty
             <div class="card">
-                <img src="/img/sample_01_before.cd33084c.webp" alt="Object">
-                <h3>Tambah / Hapus Objek</h3>
-                <p>
-                    Menghilangkan objek yang mengganggu
-                    atau menambahkan objek baru secara realistis.
-                </p>
+                <h3>Belum ada layanan</h3>
+                <p>Data layanan belum tersedia. Tambahkan layanan dari dashboard admin.</p>
             </div>
-
-            <div class="card">
-                <img src="/img/_.jpeg" alt="Pas Foto">
-                <h3>Edit Pas Foto</h3>
-                <p>
-                    Mengganti background, ukuran,
-                    hingga edit pakaian formal dengan hasil profesional.
-                </p>
-            </div>
+            @endforelse
         </div>
     </section>
 
@@ -246,6 +232,30 @@
             <a href="https://wa.me/6285669716800" class="btn-primary">
                 Pesan Sekarang
             </a>
+        </div>
+    </section>
+
+    <!-- ================= HASIL KAMI================= -->
+
+    <section id="hasil" class="section">
+        <div class="section-title">
+            <h2>Hasil Jasa Kami</h2>
+            <p>Beberapa proyek editing foto & video yang telah kami kerjakan untuk klien dari berbagai industri.</p>
+        </div>
+
+        <div class="card-grid">
+            @forelse ($portfolios as $portfolio)
+            <div class="card">
+                <img src="/{{ $portfolio->image_path }}" alt="{{ $portfolio->title }}" loading="lazy">
+                <h3>{{ $portfolio->title }}</h3>
+                <p>{{ $portfolio->description }}</p>
+            </div>
+            @empty
+            <div class="card">
+                <h3>Belum ada hasil jasa</h3>
+                <p>Belum ada portofolio yang ditambahkan. Silakan tambahkan hasil jasa melalui dashboard admin.</p>
+            </div>
+            @endforelse
         </div>
     </section>
 
