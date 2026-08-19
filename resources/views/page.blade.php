@@ -3,6 +3,7 @@
 @section('title','Studio Edit | Jasa Edit Foto Profesional')
 <!-- CSS -->
 <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/komen.css">
 
 @section('isi')
 
@@ -27,6 +28,7 @@
                 <a href="#developer">Developer</a>
                 <a href="#harga">Harga</a>
                 <a href="#hasil">Hasil Jasa Kami</a>
+                <a href="#komentar">Ulasan & Saran Client</a>
             </nav>
 
             <a href="https://wa.me/6285669716800" target="_blank" class="btn-primary">
@@ -235,7 +237,7 @@
         </div>
     </section>
 
-    <!-- ================= HASIL KAMI================= -->
+    <!-- ================= HASIL KAMI ================= -->
 
     <section id="hasil" class="section">
         <div class="section-title">
@@ -256,6 +258,144 @@
                 <p>Belum ada portofolio yang ditambahkan. Silakan tambahkan hasil jasa melalui dashboard admin.</p>
             </div>
             @endforelse
+        </div>
+    </section>
+
+    <!-- ================= KOMENTAR ================= -->
+    <section id="komentar" class="section">
+        <div class="section-title">
+            <h2>Ulasan & Saran Client</h2>
+            <p>Fitur ini disediakan bagi klien untuk memberikan ulasan,
+                kritik, maupun saran terhadap hasil kerja kami.
+                Kami mengimbau agar setiap tanggapan disampaikan menggunakan
+                bahasa yang baik, sopan, dan tidak mengandung unsur komparatif atau
+                kata-kata kasar.</p>
+        </div>
+
+        <div class="showcomment">
+            <div class="mengatur_command">
+                <div class="marquee-content fast-1">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+
+                <div class="marquee-content fast-1" aria-hidden="true">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mengatur_command">
+                <div class="marquee-content fast-2">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+
+                <div class="marquee-content fast-2" aria-hidden="true">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mengatur_command">
+                <div class="marquee-content fast-3">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+
+                <div class="marquee-content fast-3" aria-hidden="true">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="createcomment">
+            <label for="">Menambahkan Komentar</label>
+            <input type="text" name="" id="">
+            <button type="submit">Kirim</button>
         </div>
     </section>
 

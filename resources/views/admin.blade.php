@@ -3,6 +3,7 @@
 @section('title','Studio Edit | Admin Dashboard')
 <!-- Link css -->
 <link rel="stylesheet" href="/css/admin.css">
+<link rel="stylesheet" href="/css/komen.css">
 <!-- Link Javascript -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -97,18 +98,18 @@
 
         <form id="serviceForm" action="{{ route('admin.services.store') }}" method="POST" enctype="multipart/form-data" data-validate="true">
           @csrf
-          <div class="form-row" style="flex-direction:column;gap:12px;">
-            <label>
+          <div class="form-row">
+            <label class="ketik">
               Foto Layanan
               <input type="file" name="image" accept="image/*" required>
             </label>
 
-            <label>
+            <label class="ketik">
               Judul Layanan
               <input type="text" name="title" maxlength="255" placeholder="Judul layanan" required>
             </label>
 
-            <label>
+            <label class="ketik">
               Deskripsi Layanan
               <textarea name="description" rows="4" placeholder="Deskripsi layanan" required></textarea>
             </label>
@@ -186,18 +187,18 @@
 
         <form id="portfolioForm" action="{{ route('admin.portfolios.store') }}" method="POST" enctype="multipart/form-data" data-validate="true">
           @csrf
-          <div class="form-row" style="flex-direction:column;gap:12px;">
-            <label>
+          <div class="form-row">
+            <label class="ketik">
               Foto Hasil Jasa
               <input type="file" name="image" accept="image/*" required>
             </label>
 
-            <label>
+            <label class="ketik">
               Judul Hasil Jasa
               <input type="text" name="title" maxlength="255" placeholder="Judul hasil jasa" required>
             </label>
 
-            <label>
+            <label class="ketik">
               Deskripsi Hasil Jasa
               <textarea name="description" rows="4" placeholder="Deskripsi hasil jasa" required></textarea>
             </label>
@@ -268,8 +269,140 @@
           </table>
         </div>
       </div>
+
+      <!-- ================= KOMENTAR ================= -->
+      <section id="komentar" class="section">
+        <div class="section-title">
+          <h2>Ulasan & Saran Client</h2>
+          <p>Fitur ini disediakan bagi klien untuk memberikan ulasan,
+            kritik, maupun saran terhadap hasil kerja kami.
+            Kami mengimbau agar setiap tanggapan disampaikan menggunakan
+            bahasa yang baik, sopan, dan tidak mengandung unsur komparatif atau
+            kata-kata kasar.</p>
+        </div>
+
+        <div class="showcomment">
+            <div class="mengatur_command">
+                <div class="marquee-content fast-1">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+
+                <div class="marquee-content fast-1" aria-hidden="true">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mengatur_command">
+                <div class="marquee-content fast-2">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+
+                <div class="marquee-content fast-2" aria-hidden="true">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mengatur_command">
+                <div class="marquee-content fast-3">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+
+                <div class="marquee-content fast-3" aria-hidden="true">
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                    <div class="commentuser">
+                        <span>user1</span>
+                        <p>hasilnya bagus sekali</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
     </aside>
-  </div>
+
   </div>
 
   <script src="/js/admin.js"></script>

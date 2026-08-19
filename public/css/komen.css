@@ -1,0 +1,319 @@
+/* =========================================================
+   Ulasan dan dashboard admin
+========================================================= */
+:root {
+    --comment-bg: #120d20;
+    --comment-panel: #1d1430;
+    --comment-panel-soft: #281a40;
+    --comment-violet: #a855f7;
+    --comment-accent: #d8b4fe;
+    --comment-border: rgba(192, 132, 252, 0.28);
+    --comment-text: #f7f1ff;
+    --comment-muted: #b9a9ca;
+}
+
+.comments-section {
+    position: relative;
+}
+
+.comments-section::before {
+    content: "";
+    position: absolute;
+    inset: 8% 0 0;
+    z-index: -1;
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(168, 85, 247, 0.14),
+            transparent 32%
+        ),
+        linear-gradient(145deg, rgba(42, 22, 67, 0.7), transparent 65%);
+    pointer-events: none;
+}
+
+.showcomment {
+    background: linear-gradient(125deg, #160f25, var(--comment-bg));
+    border: 1px solid var(--comment-border);
+    border-radius: 28px;
+    padding: 22px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+    overflow: hidden;
+    box-shadow:
+        0 18px 55px rgba(90, 38, 132, 0.2),
+        inset 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.mengatur_command {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 10%,
+        #000 90%,
+        transparent
+    );
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 10%,
+        #000 90%,
+        transparent
+    );
+}
+
+.marquee-content {
+    display: flex;
+    width: max-content;
+    padding-right: 1px;
+    animation: scroll-left linear infinite;
+}
+
+.mengatur_command:hover .marquee-content {
+    animation-play-state: paused;
+}
+
+.fast-1 {
+    animation-duration: 20s;
+}
+.fast-2 {
+    animation-duration: 24s;
+}
+.fast-3 {
+    animation-duration: 28s;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.commentuser {
+    border-radius: 16px;
+    border: 1px solid var(--comment-border);
+    background: linear-gradient(
+        145deg,
+        rgba(168, 85, 247, 0.95),
+        rgba(91, 33, 182, 0.9)
+    );
+    color: var(--comment-text);
+    padding: 13px 16px;
+    display: inline-block;
+    margin-right: 16px;
+    width: 230px;
+    min-height: 92px;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        border-color 0.2s;
+}
+
+.commentuser:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+    border-color: var(--comment-accent);
+}
+
+.commentuser span {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.commentuser p {
+    margin: 0;
+    color: #f4eaff;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.comment-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.createcomment,
+.admin-panel {
+    padding: 26px;
+    border: 1px solid var(--comment-border);
+    border-radius: 22px;
+    background: linear-gradient(
+        145deg,
+        rgba(29, 20, 48, 0.96),
+        rgba(18, 13, 32, 0.96)
+    );
+    box-shadow: 0 14px 38px rgba(75, 29, 112, 0.18);
+}
+
+.createcomment {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+.form-heading,
+.admin-heading {
+    margin-bottom: 9px;
+}
+.form-heading h3,
+.admin-heading h3 {
+    color: var(--comment-text);
+    font-size: 1.35rem;
+}
+.eyebrow {
+    color: var(--comment-accent);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.createcomment label {
+    color: var(--comment-muted);
+    font-size: 0.85rem;
+}
+.createcomment input,
+.createcomment textarea,
+.admin-search {
+    width: 100%;
+    border: 1px solid rgba(216, 180, 254, 0.2);
+    border-radius: 10px;
+    padding: 12px 13px;
+    color: var(--comment-text);
+    background: rgba(10, 7, 18, 0.6);
+    font: inherit;
+    outline: none;
+    resize: vertical;
+}
+.createcomment input:focus,
+.createcomment textarea:focus,
+.admin-search:focus {
+    border-color: var(--comment-violet);
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.14);
+}
+.createcomment .btn-primary {
+    border: 0;
+    cursor: pointer;
+    margin-top: 7px;
+}
+.form-note {
+    color: var(--comment-muted);
+    font-size: 0.78rem;
+    margin-top: 2px;
+}
+.admin-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+.admin-lock {
+    font-size: 0.72rem;
+    color: var(--comment-accent);
+    border: 1px solid var(--comment-border);
+    border-radius: 99px;
+    padding: 4px 8px;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    margin: 17px 0;
+}
+.stats-grid div {
+    padding: 11px;
+    border-radius: 12px;
+    background: rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(192, 132, 252, 0.16);
+}
+.stats-grid strong,
+.stats-grid span {
+    display: block;
+}
+.stats-grid strong {
+    color: var(--comment-accent);
+    font-size: 1.35rem;
+}
+.stats-grid span {
+    color: var(--comment-muted);
+    font-size: 0.72rem;
+}
+.admin-search {
+    margin-bottom: 12px;
+}
+.admin-list {
+    display: grid;
+    gap: 8px;
+    max-height: 355px;
+    overflow-y: auto;
+}
+.admin-item {
+    padding: 13px;
+    border: 1px solid rgba(216, 180, 254, 0.15);
+    border-radius: 12px;
+    background: rgba(10, 7, 18, 0.35);
+}
+.admin-item-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: start;
+}
+.admin-item strong {
+    color: var(--comment-text);
+}
+.admin-item time {
+    color: var(--comment-muted);
+    font-size: 0.7rem;
+    white-space: nowrap;
+}
+.admin-item p {
+    color: #d8c9e5;
+    font-size: 0.85rem;
+    margin: 5px 0 10px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.admin-actions {
+    display: flex;
+    gap: 8px;
+}
+.admin-actions button {
+    background: transparent;
+    border: 1px solid var(--comment-border);
+    border-radius: 7px;
+    color: var(--comment-accent);
+    cursor: pointer;
+    padding: 5px 9px;
+}
+.admin-actions button:hover {
+    background: rgba(168, 85, 247, 0.16);
+}
+.empty-state {
+    color: var(--comment-muted);
+    font-size: 0.85rem;
+    padding: 12px 0;
+}
+
+@media (max-width: 780px) {
+    .comment-workspace {
+        grid-template-columns: 1fr;
+    }
+    .createcomment,
+    .admin-panel {
+        padding: 20px;
+    }
+    .commentuser {
+        width: 205px;
+    }
+}
